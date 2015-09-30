@@ -27,7 +27,7 @@ class MarupControllerSpec extends Specification {
 
     void "Test the create action returns the correct model"() {
         when:"The create action is executed"
-            controller.create()
+            controller.create_original()
 
         then:"The model is correctly created"
             model.marupInstance!= null

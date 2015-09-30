@@ -3,6 +3,7 @@ package org.pf.core.entity
 
 
 import static org.springframework.http.HttpStatus.*
+import grails.converters.JSON;
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -14,6 +15,28 @@ class SlotSelectionController {
         params.max = Math.min(max ?: 10, 100)
         respond SlotSelection.list(params), model:[slotSelectionInstanceCount: SlotSelection.count()]
     }
+	
+	def bookaslot(Integer max) {
+		println params
+		def marup = Marup.get(params.id)
+		println marup.id
+		def slotSelectionInstanceList = SlotSelection.findAllByMarup(marup)
+		respond slotSelectionInstanceList
+	}
+	
+	@Transactional
+	def selectslot(Integer max) {
+		println params 
+		def slotSelection = SlotSelection.get(params.id)
+		if(params.command?.equals("Book this slot")){
+			slotSelection.selectionStatus = "Under Review"
+		}else{
+			slotSelection.selectionStatus = "Empty"
+		}
+		
+		slotSelection.save flush:true
+		render status:200, text:slotSelection as JSON  
+	}
 
     def show(SlotSelection slotSelectionInstance) {
         respond slotSelectionInstance

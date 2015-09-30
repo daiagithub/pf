@@ -22,7 +22,7 @@ class Marup {
 	String createdBy
 	String lastUpdatedBy
 	
-	static belongsTo = [person:Person]
+	static belongsTo = [owner:Person]
 	static hasMany =[slotSelections:SlotSelection, draws:Draw, subscriptions:Subscription]
 	
     static constraints = {
