@@ -3,6 +3,10 @@ package org.pf.core.entity
 
 
 import static org.springframework.http.HttpStatus.*
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -14,6 +18,25 @@ class MarupController {
         params.max = Math.min(max ?: 10, 100)
         respond Marup.list(params), model:[marupInstanceCount: Marup.count()]
     }
+	
+	def search() {
+		params.max = Math.min(params.max ? params.int('max'): 10, 100)
+		def marupInstanceList = Marup.createCriteria().list (params) {
+				or{
+					if ( params.sumAssured ) {
+						eq("sumAssured", params.sumAssured)
+					}
+					if ( params.noOfParticipants ) {
+						eq("noOfParticipants", Integer.valueOf(params.noOfParticipants))
+					}
+					if ( params.preferredVenue ) {
+						eq("preferredVenue", params.preferredVenue)
+					}
+				}
+			   }
+		respond marupInstanceList, model:[marupInstanceCount: marupInstanceList.totalCount, sumAssured:params.sumAssured, preferredVenue:params.preferredVenue, noOfParticipants:params.noOfParticipants]
+		//respond Marup.list(params), model:[marupInstanceCount: Marup.count()]
+	}
 
     def show(Marup marupInstance) {
         respond marupInstance
@@ -28,19 +51,40 @@ class MarupController {
         if (marupInstance == null) {
             notFound()
             return
-        }
-
-        if (marupInstance.hasErrors()) {
+        }		
+		
+		marupInstance.lastUpdatedBy="Daia"
+		marupInstance.createdBy = "Daia"
+		marupInstance.owner = Person.get(4)//TODO Should be changed to log in user.
+		marupInstance.validate()
+		if (marupInstance.hasErrors()) {
             respond marupInstance.errors, view:'create'
             return
         }
-
-        marupInstance.save flush:true
+		
+		marupInstance.save flush:true
+		
+		if(marupInstance.noOfParticipants){
+			//Generate slots
+			1.upto(marupInstance.noOfParticipants, {
+				SlotSelection slotSelection = new SlotSelection(slotName: "SLOT " + it, selectionStatus: 'Empty', createdBy: 'Daia', lastUpdatedBy: 'Daia')
+				slotSelection.marup = marupInstance
+				println "Saving " + slotSelection.slotName + "..."
+				slotSelection.validate()
+				if (slotSelection.hasErrors()) {
+					println slotSelection.errors
+					respond slotSelection.errors, view:'create'
+					return
+				}
+				
+				slotSelection.save flush:true
+			})
+		}
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'marup.label', default: 'Marup'), marupInstance.id])
-                redirect marupInstance
+                redirect action:"search"
             }
             '*' { respond marupInstance, [status: CREATED] }
         }

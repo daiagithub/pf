@@ -103,7 +103,7 @@
     <li><g:link controller="marup" action="show" id="${m.id}">${m?.encodeAsHTML()}</g:link></li>
 </g:each>
 <li class="add">
-<g:link controller="marup" action="create" params="['person.id': personInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'marup.label', default: 'Marup')])}</g:link>
+<g:link controller="marup" action="create_original" params="['person.id': personInstance?.id]">${message(code: 'default.add.label', args: [message(code: 'marup.label', default: 'Marup')])}</g:link>
 </li>
 </ul>
 

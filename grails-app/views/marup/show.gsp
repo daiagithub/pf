@@ -142,11 +142,11 @@
 				</li>
 				</g:if>
 			
-				<g:if test="${marupInstance?.person}">
+				<g:if test="${marupInstance?.owner}">
 				<li class="fieldcontain">
 					<span id="person-label" class="property-label"><g:message code="marup.person.label" default="Person" /></span>
 					
-						<span class="property-value" aria-labelledby="person-label"><g:link controller="person" action="show" id="${marupInstance?.person?.id}">${marupInstance?.person?.encodeAsHTML()}</g:link></span>
+						<span class="property-value" aria-labelledby="person-label"><g:link controller="person" action="show" id="${marupInstance?.owner?.id}">${marupInstance?.owner?.encodeAsHTML()}</g:link></span>
 					
 				</li>
 				</g:if>
