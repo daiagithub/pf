@@ -55,7 +55,7 @@ class MarupController {
 		
 		marupInstance.lastUpdatedBy="Daia"
 		marupInstance.createdBy = "Daia"
-		marupInstance.owner = Person.get(4)//TODO Should be changed to log in user.
+		marupInstance.owner = Person.get(1)//TODO Should be changed to log in user.
 		marupInstance.validate()
 		if (marupInstance.hasErrors()) {
             respond marupInstance.errors, view:'create'
