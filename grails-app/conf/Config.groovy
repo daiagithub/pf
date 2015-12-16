@@ -14,21 +14,37 @@
 grails.project.groupId = appName // change this to alter the default package name and Maven publishing destination
 
 // The ACCEPT header will not be used for content negotiation for user agents containing the following strings (defaults to the 4 major rendering engines)
-grails.mime.disable.accept.header.userAgents = ['Gecko', 'WebKit', 'Presto', 'Trident']
+grails.mime.disable.accept.header.userAgents = [
+	'Gecko',
+	'WebKit',
+	'Presto',
+	'Trident'
+]
 grails.mime.types = [ // the first one is the default format
-    all:           '*/*', // 'all' maps to '*' or the first available format in withFormat
-    atom:          'application/atom+xml',
-    css:           'text/css',
-    csv:           'text/csv',
-    form:          'application/x-www-form-urlencoded',
-    html:          ['text/html','application/xhtml+xml'],
-    js:            'text/javascript',
-    json:          ['application/json', 'text/json'],
-    multipartForm: 'multipart/form-data',
-    rss:           'application/rss+xml',
-    text:          'text/plain',
-    hal:           ['application/hal+json','application/hal+xml'],
-    xml:           ['text/xml', 'application/xml']
+	all:           '*/*', // 'all' maps to '*' or the first available format in withFormat
+	atom:          'application/atom+xml',
+	css:           'text/css',
+	csv:           'text/csv',
+	form:          'application/x-www-form-urlencoded',
+	html:          [
+		'text/html',
+		'application/xhtml+xml'
+	],
+	js:            'text/javascript',
+	json:          [
+		'application/json',
+		'text/json'
+	],
+	multipartForm: 'multipart/form-data',
+	rss:           'application/rss+xml',
+	text:          'text/plain',
+	hal:           [
+		'application/hal+json',
+		'application/hal+xml'
+	],
+	xml:           [
+		'text/xml',
+		'application/xml']
 ]
 
 // URL Mapping Cache Max Size, defaults to 5000
@@ -43,20 +59,20 @@ grails.controllers.defaultScope = 'singleton'
 
 // GSP settings
 grails {
-    views {
-        gsp {
-            encoding = 'UTF-8'
-            htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
-            codecs {
-                expression = 'html' // escapes values inside ${}
-                scriptlet = 'html' // escapes output from scriptlets in GSPs
-                taglib = 'none' // escapes output from taglibs
-                staticparts = 'none' // escapes output from static template parts
-            }
-        }
-        // escapes all not-encoded output at final stage of outputting
-        // filteringCodecForContentType.'text/html' = 'html'
-    }
+	views {
+		gsp {
+			encoding = 'UTF-8'
+			htmlcodec = 'xml' // use xml escaping instead of HTML4 escaping
+			codecs {
+				expression = 'html' // escapes values inside ${}
+				scriptlet = 'html' // escapes output from scriptlets in GSPs
+				taglib = 'none' // escapes output from taglibs
+				staticparts = 'none' // escapes output from static template parts
+			}
+		}
+		// escapes all not-encoded output at final stage of outputting
+		// filteringCodecForContentType.'text/html' = 'html'
+	}
 }
 
 
@@ -86,34 +102,80 @@ grails.hibernate.pass.readonly = false
 grails.hibernate.osiv.readonly = false
 
 environments {
-    development {
-        grails.logging.jul.usebridge = true
-    }
-    production {
-        grails.logging.jul.usebridge = false
-        // TODO: grails.serverURL = "http://www.changeme.com"
-    }
+	development {
+		grails.logging.jul.usebridge = true
+	}
+	production {
+		grails.logging.jul.usebridge = false
+		// TODO: grails.serverURL = "http://www.changeme.com"
+	}
 }
 
 // log4j configuration
 log4j.main = {
-    // Example of changing the log pattern for the default console appender:
-    //
-    //appenders {
-    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
-    //}
+	// Example of changing the log pattern for the default console appender:
+	//
+	//appenders {
+	//    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+	//}
 
-    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
-           'org.codehaus.groovy.grails.web.pages',          // GSP
-           'org.codehaus.groovy.grails.web.sitemesh',       // layouts
-           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
-           'org.codehaus.groovy.grails.web.mapping',        // URL mapping
-           'org.codehaus.groovy.grails.commons',            // core / classloading
-           'org.codehaus.groovy.grails.plugins',            // plugins
-           'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-           'org.springframework',
-           'org.hibernate',
-           'net.sf.ehcache.hibernate'
+	error  'org.codehaus.groovy.grails.web.servlet',        // controllers
+			'org.codehaus.groovy.grails.web.pages',          // GSP
+			'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+			'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+			'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+			'org.codehaus.groovy.grails.commons',            // core / classloading
+			'org.codehaus.groovy.grails.plugins',            // plugins
+			'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+			'org.springframework',
+			'org.hibernate',
+			'net.sf.ehcache.hibernate'
 }
 
 grails.plugins.twitterbootstrap.fixtaglib = true
+
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'org.pf.core.secure.User'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'org.pf.core.secure.UserRole'
+grails.plugin.springsecurity.authority.className = 'org.pf.core.secure.Role'
+grails.plugin.springsecurity.interceptUrlMap = [
+	'/':                              ['permitAll'],
+	'/index':                         ['permitAll'],
+	'/index.gsp':                     ['permitAll'],
+	'/**/js/**':                      ['permitAll'],
+	'/**/css/**':                     ['permitAll'],
+	'/**/images/**':                  ['permitAll'],
+	'/**/favicon.ico':                ['permitAll'],
+	'/login/**':                      ['permitAll'],
+	'/logout/**':                     ['permitAll'],
+	'/oauth/**':                      ['permitAll'],
+	'/marup/**':                      ['permitAll']
+]
+
+grails.plugin.springsecurity.securityConfigType = 'InterceptUrlMap'
+
+// Allow logout with a GET request
+grails.plugin.springsecurity.logout.postOnly = false
+
+// Added by the Spring Security OAuth plugin:
+grails.plugin.springsecurity.oauth.domainClass = 'org.pf.core.secure.OAuthID'
+
+def appName = grails.util.Metadata.current.'app.name'
+def baseURL = grails.serverURL ?: "http://127.0.0.1:8080/${appName}"
+
+oauth {
+	providers {
+		google {
+			api = org.grails.plugin.springsecurity.oauth.GoogleApi20
+			key = '514949531612.apps.googleusercontent.com'
+			secret = 'OpgJXdTZfFphytsVLRcl7m5v'
+			successUri = '/oauth/google/success'
+			failureUri = '/oauth/google/error'
+			callback = "${baseURL}/oauth/google/callback"
+			scope = 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email'
+		}
+	}
+}
+
+
+
