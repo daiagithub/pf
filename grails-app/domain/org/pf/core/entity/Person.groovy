@@ -1,5 +1,7 @@
 package org.pf.core.entity
 
+import org.pf.core.secure.User;
+
 class Person {
 
 	String firstName
