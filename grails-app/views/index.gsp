@@ -45,12 +45,6 @@
 	margin: 2em 1em 1.25em 18em;
 }
 
-h2 {
-	margin-top: 1em;
-	margin-bottom: 0.3em;
-	font-size: 1em;
-}
-
 p {
 	line-height: 1.5;
 	margin: 0.25em 0;
@@ -80,14 +74,16 @@ p {
 </style>
 </head>
 <body>
-	<div id="status" role="complementary">
+	<!-- <div id="status" role="complementary">
 		<h1></h1>
 		<ul>
 			<li></li>
 		</ul>
 
-	</div>
-	<div id="page-body" role="main">
+	</div> -->
+	
+	<div role="main">
+	<!-- <div id="page-body" role="main"> -->
 		<h1></h1>
 		<p>
 			<sec:ifLoggedIn>
@@ -95,16 +91,22 @@ p {
         </sec:ifLoggedIn>
 
 			<sec:ifNotLoggedIn>
-				<oauth:connect provider="google" id="google-connect-link">Google</oauth:connect>
+				<oauth:connect provider="google" id="google-connect-link">Sign up with Google</oauth:connect>
+				<br />
+				Already have an account?. <g:link controller="login" action="auth"><g:message code="springSecurity.oauth.registration.back" default=" Sign in"/></g:link>
 			</sec:ifNotLoggedIn>
 
-			Logged with google?
+			<!-- Logged with google?
 			<s2o:ifLoggedInWith provider="google">yes</s2o:ifLoggedInWith>
-			<s2o:ifNotLoggedInWith provider="google">no</s2o:ifNotLoggedInWith>
+			<s2o:ifNotLoggedInWith provider="google">no</s2o:ifNotLoggedInWith> -->
 
 			<br />
+
+			<!--Accessible links if logged in-->
 			<sec:ifLoggedIn>
-				<g:link controller="income">Incomes</g:link>
+				<g:link controller="marup" action="search">Marup</g:link>
+
+				<g:render template="../marup/searchform" />
 			</sec:ifLoggedIn>
 
 		</p>

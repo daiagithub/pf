@@ -1,0 +1,57 @@
+label{font-weight: normal !important;}
+h1{margin: 10px auto !important}
+
+h2 {
+	margin-top: 0.3em !important;
+	margin-bottom: 0.3em !important;
+}
+
+.cap-header-sm{
+	color: #777;
+	font-size: 12px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: bold;
+    padding-left: 19px;
+    padding-bottom: 8px
+}
+
+.cap-header-md{
+	color: #777;
+	font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    font-weight: bold;
+    padding-left: 19px;
+    padding-bottom: 8px
+}
+
+.nav-sidebar a{
+	font-size: 13px;
+	color: #777;
+	line-height: 1;
+}
+
+.nav > li > a:hover, .nav > li > a:focus{
+color: #333;
+background-color: transparent !important;	
+}
+
+.nav-sidebar > .active > a{
+	background: none !important;
+	color: #333 !important;
+	font-weight: bold;
+}
+
+/*Bootstrap horizontal descripition customization*/
+.dl-horizontal dd {
+    margin-left: 190px;
+}
+
+dt, dd {
+    line-height: 1.62857143 !important;
+}
+
+.dl-horizontal dt {
+    width: 170px !important;
+    color: #777;
+    font-weight: normal;
+}

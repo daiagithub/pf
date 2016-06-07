@@ -13,15 +13,23 @@ import grails.transaction.Transactional
 class MarupController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    def springSecurityService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Marup.list(params), model:[marupInstanceCount: Marup.count()]
+
+        def marupInstanceList = Marup.createCriteria().list (params) {
+            order("dateCreated", "desc")  
+        }
+
+        println "aaaa"
+        respond marupInstanceList, model:[marupInstanceCount: marupInstanceList.totalCount]
     }
 	
 	def search() {
 		params.max = Math.min(params.max ? params.int('max'): 10, 100)
 		def marupInstanceList = Marup.createCriteria().list (params) {
+                order("dateCreated", "desc") 
 				or{
 					if ( params.sumAssured ) {
 						eq("sumAssured", params.sumAssured)
@@ -55,7 +63,7 @@ class MarupController {
 		
 		marupInstance.lastUpdatedBy="Daia"
 		marupInstance.createdBy = "Daia"
-		marupInstance.owner = Person.get(1)//TODO Should be changed to log in user.
+		marupInstance.owner = springSecurityService.currentUser.person
 		marupInstance.validate()
 		if (marupInstance.hasErrors()) {
             respond marupInstance.errors, view:'create'
@@ -84,7 +92,7 @@ class MarupController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'marup.label', default: 'Marup'), marupInstance.id])
-                redirect action:"search"
+                redirect action:"index", controller:"home"
             }
             '*' { respond marupInstance, [status: CREATED] }
         }

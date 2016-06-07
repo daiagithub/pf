@@ -24,6 +24,7 @@ class Person {
 	static hasMany =[users: User, slotSelections:SlotSelection, marups:Marup, subscriptions:Subscription]
 
 	static constraints = {
+		lastName nullable:true
 		addressLine1 nullable:true
 		addressLine2 nullable:true
 		area nullable:true

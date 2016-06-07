@@ -1,0 +1,24 @@
+As a Mohori, can do the following
+	1. Create Marup
+	2. Search Marup
+	3. Book slot
+	4. Login to access all authorities
+	5. Approve/reject subscription to a marup
+	6. Have Google linked account as well as app only account
+
+As an admin, can do the following
+	1. Create Marup
+	2. Search Marup
+	3. Book slot
+	4. Login to access all authorities
+	5. Approve/reject subscription to a marup
+	6. Have Google linked account as well as app only account
+	7. Manage users
+
+
+Todo:
+	List authorities and assigned
+	There seems to be an issue, OAuthID got created with no clue without an User resord
+	Mongo DB not connecting after 13-14 connection
+
+	http://getbootstrap.com/examples/dashboard/?#

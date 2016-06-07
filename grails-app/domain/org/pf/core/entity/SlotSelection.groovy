@@ -3,6 +3,9 @@ package org.pf.core.entity
 import java.util.Date;
 
 class SlotSelection {
+
+	transient bookedBy
+
 	String slotName	
 	Date dateBooked
 	String selectionStatus		//Once Confirmed, use will have a subscription
@@ -15,9 +18,11 @@ class SlotSelection {
 
 	static belongsTo = [person:Person, marup:Marup]
 	static hasMany =[subscriptions:Subscription]
+
+	static transients = ['bookedBy']
 	
     static constraints = {
-    	selectionStatus inList: ['Empty', 'Under Review', 'Confirmed', 'Denied']
+    	selectionStatus inList: ['Empty', 'Under review', 'Confirmed', 'On hold', 'Denied']
 		dateBooked nullable:true
 		person nullable:true
 		description nullable:true

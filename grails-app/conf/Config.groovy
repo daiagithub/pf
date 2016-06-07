@@ -149,7 +149,8 @@ grails.plugin.springsecurity.interceptUrlMap = [
 	'/login/**':                      ['permitAll'],
 	'/logout/**':                     ['permitAll'],
 	'/oauth/**':                      ['permitAll'],
-	'/marup/**':                      ['permitAll']
+	'/marup/**':                      ['permitAll'],
+	'/slotSelection/**':              ['permitAll']
 ]
 
 grails.plugin.springsecurity.securityConfigType = 'InterceptUrlMap'

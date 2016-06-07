@@ -1,0 +1,13 @@
+<plugin name='spring-security-oauth-google' version='0.3.1' grailsVersion='2.0 &gt; *'>
+  <author>Mihai Cazacu, Enrico Comiti, Alexey Zhokhov</author>
+  <authorEmail>donbeave@gmail.com</authorEmail>
+  <title>Google for Spring Security OAuth plugin</title>
+  <description>Integrate [Google|http://www.google.com] to [Spring Security OAuth plugin|http://grails.org/plugin/spring-security-oauth].
+</description>
+  <documentation>http://grails.org/plugin/spring-security-oauth-google</documentation>
+  <type>SpringSecurityOauthGoogleGrailsPlugin</type>
+  <resources>
+    <resource>DefaultGoogleOauthConfig</resource>
+    <resource>grails.plugin.springsecurity.oauth.GoogleSpringSecurityOAuthService</resource>
+  </resources>
+</plugin>

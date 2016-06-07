@@ -10,6 +10,7 @@ import grails.transaction.Transactional
 class SlotSelectionController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    def springSecurityService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -21,22 +22,43 @@ class SlotSelectionController {
 		def marup = Marup.get(params.id)
 		println marup.id
 		def slotSelectionInstanceList = SlotSelection.findAllByMarup(marup)
-		respond slotSelectionInstanceList
+        [marup: marup, slotSelectionInstanceList: slotSelectionInstanceList]
 	}
 	
 	@Transactional
 	def selectslot(Integer max) {
-		println params 
+		//println params 
 		def slotSelection = SlotSelection.get(params.id)
 		if(params.command?.equals("Book this slot")){
-			slotSelection.selectionStatus = "Under Review"
-		}else{
+            def user = springSecurityService.currentUser
+            slotSelection.person = user.person
+			slotSelection.selectionStatus = "Under review"
+            slotSelection.bookedBy = slotSelection.person.firstName
+        }else{
+            slotSelection.person = null
 			slotSelection.selectionStatus = "Empty"
+            slotSelection.bookedBy=""
 		}
 		
+        
 		slotSelection.save flush:true
 		render status:200, text:slotSelection as JSON  
 	}
+
+    @Transactional
+    def confirmSlot() {
+        println "Received " + params
+        if(!params.id && !params.decision) render status:400
+
+        def slotSelectionInstance = SlotSelection.get(params.id)
+        
+        if(params.decision == "confirm") slotSelectionInstance.selectionStatus = "Confirmed"
+        if(params.decision == "hold") slotSelectionInstance.selectionStatus = "On hold"
+
+        slotSelectionInstance.save flush:true
+
+        render status:200, text:slotSelectionInstance as JSON         
+    }
 
     def show(SlotSelection slotSelectionInstance) {
         respond slotSelectionInstance
